@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roommate Roulette: Room 3206 Edition</title>
+    <style>
+        :root {
+            --primary: #8e44ad;
+            --secondary: #2c3e50;
+            --accent: #f1c40f;
+            --bg: #fdfcf0;
+        }
+
+        body {
+            background-color: var(--bg);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--secondary);
+        }
+
+        .game-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 4px solid var(--primary);
+        }
+
+        h1 { margin-bottom: 10px; color: var(--primary); }
+        
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            background: #eee;
+            padding: 20px;
+            border-radius: 10px;
+            border: inset 4px #ccc;
+        }
+
+        .slot {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            width: 50%;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            line-height: 1.2;
+        }
+
+        .compatibility-meter {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #777;
+        }
+
+        #score {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.3s;
+            box-shadow: 0 4px 0 #6d3285;
+        }
+
+        button:hover { background-color: #9b59b6; }
+        button:active { transform: translateY(4px); box-shadow: none; }
+
+        .nav-link {
+            margin-top: 25px;
+            display: block;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .nav-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Roommate Roulette</h1>
+        <p>Who are you living with today?</p>
+
+        <div class="slot-machine">
+            <div id="name-slot" class="slot">???</div>
+            <div id="trait-slot" class="slot">???</div>
+        </div>
+
+        <button onclick="spin()">SPIN THE WHEEL</button>
+
+        <div class="compatibility-meter">
+            Compatibility Score: <span id="score">0%</span>
+        </div>
+
+        <a href="fromScratch.html" class="nav-link">← Back to Room 3206 Info</a>
+    </div>
+
+    <script>
+        const roommates = ["Charley", "Mona", "Ashley", "Hailey", "Eibhlin", "Andrea"];
+        const traits = [
+            "Always does your dishes for you",
+            "Tries to jump scare you in the elevator",
+            "Steals exactly one fry from every meal",
+            "Accidentally buys 4 gallons of milk",
+            "Starts a deep convo at 2:00 AM",
+            "Left their laundry in the dryer again",
+            "Secretly a world-class opera singer",
+            "Knows every BYU football stat by heart",
+            "Owns 14 identical pairs of socks"
+        ];
+
+        function spin() {
+            const nameDisplay = document.getElementById('name-slot');
+            const traitDisplay = document.getElementById('trait-slot');
+            const scoreDisplay = document.getElementById('score');
+            
+            let counter = 0;
+            const spinInterval = setInterval(() => {
+                nameDisplay.innerText = roommates[Math.floor(Math.random() * roommates.length)];
+                traitDisplay.innerText = traits[Math.floor(Math.random() * traits.length)];
+                
+                counter++;
+                if (counter > 15) {
+                    clearInterval(spinInterval);
+                    finalizeSelection();
+                }
+            }, 70);
+        }
+
+        function finalizeSelection() {
+            const finalName = roommates[Math.floor(Math.random() * roommates.length)];
+            const finalTrait = traits[Math.floor(Math.random() * traits.length)];
+            
+            document.getElementById('name-slot').innerText = finalName;
+            document.getElementById('trait-slot').innerText = finalTrait;
+
+            const randomScore = Math.floor(Math.random() * 101);
+            document.getElementById('score').innerText = randomScore + "%";
+            
+            if(randomScore > 80) document.getElementById('score').style.color = "green";
+            else if(randomScore < 30) document.getElementById('score').style.color = "red";
+            else document.getElementById('score').style.color = "#8e44ad";
+        }
+    </script>
+</body>
+</html>
